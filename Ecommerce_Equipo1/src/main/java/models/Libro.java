@@ -4,18 +4,20 @@
  */
 package models;
 
+import jakarta.persistence.*;
 import java.util.Date;
 
 /**
  *
  * @author Adrián
  */
+@Entity
 public class Libro {
 
     public Libro() {
-        
+
     }
-    
+    @Id
     int idLibro;
     String ISBN;
     String titulo;
@@ -23,6 +25,7 @@ public class Libro {
     int precio;
     int stock;
     Date anioPublicacion;
+    @ManyToMany
     Genero idGenero;
 
     public Libro(int idLibro, String ISBN, String titulo, String autor, int precio, int stock, Date anioPublicacion, Genero idGenero) {
@@ -104,6 +107,5 @@ public class Libro {
     public String toString() {
         return "Libro{" + "idLibro=" + idLibro + ", ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", precio=" + precio + ", stock=" + stock + ", anioPublicacion=" + anioPublicacion + ", idGenero=" + idGenero + '}';
     }
-    
-    
+
 }

@@ -4,18 +4,24 @@
  */
 package models;
 
+import jakarta.persistence.*;
+
 /**
  *
  * @author Adrián
  */
+@Entity
 public class DetalleVenta {
-    
-    public DetalleVenta(){
-        
+
+    public DetalleVenta() {
+
     }
-    
+
+    @Id
     int idDetalleVenta;
+    @OneToOne
     Venta idVenta;
+    @OneToOne
     Libro idLibro;
     int cantidad;
     int precioUnitario;
@@ -82,7 +88,5 @@ public class DetalleVenta {
     public String toString() {
         return "DetalleVenta{" + "idDetalleVenta=" + idDetalleVenta + ", idVenta=" + idVenta + ", idLibro=" + idLibro + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + ", subTotal=" + subTotal + '}';
     }
-    
-    
-    
+
 }

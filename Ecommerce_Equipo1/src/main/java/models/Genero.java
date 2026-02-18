@@ -4,16 +4,19 @@
  */
 package models;
 
+import jakarta.persistence.*;
+
 /**
  *
  * @author Adrián
  */
+@Entity
 public class Genero {
     
     public Genero(){
         
     }
-    
+    @Id
     int idGenero;
     String nombreGenero;
 

@@ -4,22 +4,26 @@
  */
 package models;
 
+import jakarta.persistence.*;
 import java.util.Date;
 
 /**
  *
  * @author Adrián
  */
+@Entity
 public class Venta {
 
     public Venta() {
     }
     
-    
+    @Id
     int idVenta;
     Date fechaHora;
     int total;
+    @OneToOne
     Cliente idCliente;
+    @OneToOne
     MetodoPago idPago;
 
     public int getIdVenta() {

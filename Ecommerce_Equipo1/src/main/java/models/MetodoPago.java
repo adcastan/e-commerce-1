@@ -4,16 +4,19 @@
  */
 package models;
 
+import jakarta.persistence.*;
+
 /**
  *
  * @author Adrián
  */
+@Entity
 public class MetodoPago {
     
     public MetodoPago(){
         
     }
-    
+    @Id
     int idPago;
     String tipo;
 

@@ -4,10 +4,13 @@
  */
 package models;
 
+import jakarta.persistence.*;
+
 /**
  *
  * @author Adrián
  */
+@Entity
 public class Cliente {
     
     public Cliente(){
@@ -21,10 +24,13 @@ public class Cliente {
         this.contrasenia = contrasenia;
     }
     
-    
+    @Id
     int idCliente;
+    @OneToOne
     String nombreCliente;
+    @OneToOne
     String correoElectronico;
+    @OneToOne
     String contrasenia;
 
     public int getIdCliente() {
