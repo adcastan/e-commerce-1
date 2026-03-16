@@ -1,0 +1,21 @@
+<%-- 
+    Document   : Pedidos
+    Created on : 15 mar 2026, 5:43:24 p.m.
+    Author     : Adrián
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link	href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+    </body>
+</html>
