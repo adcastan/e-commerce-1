@@ -4,10 +4,45 @@
  */
 package util;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
 /**
  *
  * @author Adrián
  */
 public class JPAUtil {
-    
+
+    private static JPAUtil instance;
+    private EntityManagerFactory emf;
+
+    // Constructor privado para evitar instanciación externa
+    private JPAUtil() {
+        try {
+            emf = Persistence.createEntityManagerFactory("ecommerce-1");
+        } catch (Exception e) {
+            throw new RuntimeException("Error al crear EntityManagerFactory", e);
+        }
+    }
+
+    // Método para obtener la única instancia
+    public static synchronized JPAUtil getInstance() {
+        if (instance == null) {
+            instance = new JPAUtil();
+        }
+        return instance;
+    }
+
+    // Crear EntityManager
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    // Cerrar factory cuando la aplicación termine
+    public void close() {
+        if (emf != null && emf.isOpen()) {
+            emf.close();
+        }
+    }
 }

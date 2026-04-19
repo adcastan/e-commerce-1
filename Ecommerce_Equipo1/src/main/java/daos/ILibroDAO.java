@@ -4,10 +4,24 @@
  */
 package daos;
 
+import java.util.List;
+import models.Cliente;
+import models.Libro;
+
 /**
  *
  * @author Adrián
  */
 public interface ILibroDAO {
+    void guardar(Libro libro);
     
+    public Libro crearLibro(Libro libro);
+
+    Libro buscarPorCorreoYContrasenia(String titulo);
+
+    Libro buscarPorGenero(String genero);
+
+    void actualizar(Libro libro);
+
+    void eliminar(int id);
 }

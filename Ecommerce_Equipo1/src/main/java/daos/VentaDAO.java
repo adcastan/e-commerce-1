@@ -4,45 +4,37 @@
  */
 package daos;
 
-import java.util.List;
-import models.Libro;
+import models.Venta;
 
 /**
  *
  * @author Adrián
  */
-public class LibroDAO implements ILibroDAO{
+public class VentaDAO implements IVentaDAO{
 
     @Override
-    public void guardar(Libro libro) {
+    public void guardar(Venta venta) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Libro crearLibro(Libro libro) {
+    public Venta crearVenta(Venta venta) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Libro buscarPorCorreoYContrasenia(String titulo) {
+    public void buscarVentaPorId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Libro buscarPorGenero(String genero) {
+    public void actualizarVenta(Venta venta) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void actualizar(Libro libro) {
+    public void eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public void eliminar(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-
     
 }

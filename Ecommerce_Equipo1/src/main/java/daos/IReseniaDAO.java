@@ -4,22 +4,20 @@
  */
 package daos;
 
-import java.util.List;
-import models.Cliente;
-import models.Libro;
+import models.Resenia;
 
 /**
  *
  * @author Adrián
  */
-public interface IClienteDAO {
-     void guardar(Cliente cliente);
+public interface IReseniaDAO {
+     void guardar(Resenia resenia);
     
-    public Cliente crearCliente(Cliente cliente);
+    public Resenia crearCliente(Resenia resenia);
 
     Long buscarPorId(Long id);
 
-    void actualizar(Cliente cliente);
+    void actualizar(Resenia resenia);
 
     Long eliminar(Long id);
 }

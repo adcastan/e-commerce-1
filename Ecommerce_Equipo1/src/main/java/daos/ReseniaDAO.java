@@ -4,45 +4,37 @@
  */
 package daos;
 
-import java.util.List;
-import models.Libro;
+import models.Resenia;
 
 /**
  *
  * @author Adrián
  */
-public class LibroDAO implements ILibroDAO{
+public class ReseniaDAO implements IReseniaDAO{
 
     @Override
-    public void guardar(Libro libro) {
+    public void guardar(Resenia resenia) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Libro crearLibro(Libro libro) {
+    public Resenia crearCliente(Resenia resenia) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Libro buscarPorCorreoYContrasenia(String titulo) {
+    public Long buscarPorId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Libro buscarPorGenero(String genero) {
+    public void actualizar(Resenia resenia) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void actualizar(Libro libro) {
+    public Long eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public void eliminar(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-
     
 }
