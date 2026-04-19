@@ -39,7 +39,7 @@ public class LibroDAO implements ILibroDAO{
     }
 
     @Override
-    public void eliminar(Long id) {
+    public void eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
