@@ -1,39 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "detalle_ventas")
 public class DetalleVenta {
 
-    public DetalleVenta() {
-
-    }
-
     @Id
-    int idDetalleVenta;
-    @OneToOne
-    Venta idVenta;
-    @OneToOne
-    Libro idLibro;
-    int cantidad;
-    int precioUnitario;
-    int subTotal;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idDetalleVenta;
 
-    public DetalleVenta(int idDetalleVenta, Venta idVenta, Libro idLibro, int cantidad, int precioUnitario, int subTotal) {
-        this.idDetalleVenta = idDetalleVenta;
-        this.idVenta = idVenta;
-        this.idLibro = idLibro;
-        this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
-        this.subTotal = subTotal;
+    @ManyToOne
+    @JoinColumn(name = "idVenta")
+    private Venta idVenta;
+
+    @ManyToOne
+    @JoinColumn(name = "idLibro")
+    private Libro idLibro;
+
+    private int cantidad;
+    private int precioUnitario;
+    private int subTotal;
+
+    public DetalleVenta() {
     }
 
     public int getIdDetalleVenta() {
@@ -88,5 +77,4 @@ public class DetalleVenta {
     public String toString() {
         return "DetalleVenta{" + "idDetalleVenta=" + idDetalleVenta + ", idVenta=" + idVenta + ", idLibro=" + idLibro + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + ", subTotal=" + subTotal + '}';
     }
-
 }

@@ -1,24 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "generos")
 public class Genero {
-    
-    public Genero(){
-        
-    }
+
     @Id
-    int idGenero;
-    String nombreGenero;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idGenero;
+    private String nombreGenero;
+
+    public Genero() {
+    }
 
     public Genero(int idGenero, String nombreGenero) {
         this.idGenero = idGenero;
@@ -45,7 +39,4 @@ public class Genero {
     public String toString() {
         return "Genero{" + "idGenero=" + idGenero + ", nombreGenero=" + nombreGenero + '}';
     }
-    
-    
-    
 }

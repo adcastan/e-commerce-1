@@ -1,30 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "ventas")
 public class Venta {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idVenta;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaHora;
+
+    private int total;
+    private String estado;
+
+    @ManyToOne
+    @JoinColumn(name = "idCliente")
+    private Cliente idCliente;
+
+    @ManyToOne
+    @JoinColumn(name = "idPago")
+    private MetodoPago idPago;
+
+    @OneToMany(mappedBy = "idVenta", cascade = CascadeType.ALL)
+    private List<DetalleVenta> detalles;
 
     public Venta() {
     }
-    
-    @Id
-    int idVenta;
-    Date fechaHora;
-    int total;
-    @OneToOne
-    Cliente idCliente;
-    @OneToOne
-    MetodoPago idPago;
 
     public int getIdVenta() {
         return idVenta;
@@ -50,6 +56,14 @@ public class Venta {
         this.total = total;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public Cliente getIdCliente() {
         return idCliente;
     }
@@ -66,10 +80,16 @@ public class Venta {
         this.idPago = idPago;
     }
 
+    public List<DetalleVenta> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<DetalleVenta> detalles) {
+        this.detalles = detalles;
+    }
+
     @Override
     public String toString() {
-        return "Venta{" + "idVenta=" + idVenta + ", fechaHora=" + fechaHora + ", total=" + total + ", idCliente=" + idCliente + ", idPago=" + idPago + '}';
+        return "Venta{" + "idVenta=" + idVenta + ", fechaHora=" + fechaHora + ", total=" + total + ", estado=" + estado + ", idCliente=" + idCliente + ", idPago=" + idPago + '}';
     }
-    
-    
 }

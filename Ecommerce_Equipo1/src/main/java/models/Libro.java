@@ -1,34 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
-import java.util.Date;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "libros")
 public class Libro {
 
-    public Libro() {
-
-    }
     @Id
-    int idLibro;
-    String ISBN;
-    String titulo;
-    String autor;
-    int precio;
-    int stock;
-    Date anioPublicacion;
-    @ManyToMany
-    Genero idGenero;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idLibro;
 
-    public Libro(int idLibro, String ISBN, String titulo, String autor, int precio, int stock, Date anioPublicacion, Genero idGenero) {
+    private String ISBN;
+    private String titulo;
+    private String autor;
+    private int precio;
+    private int stock;
+    private int anioPublicacion;
+
+    @ManyToOne
+    @JoinColumn(name = "idGenero")
+    private Genero idGenero;
+
+    public Libro() {
+    }
+
+    public Libro(int idLibro, String ISBN, String titulo, String autor, int precio, int stock, int anioPublicacion, Genero idGenero) {
         this.idLibro = idLibro;
         this.ISBN = ISBN;
         this.titulo = titulo;
@@ -87,11 +83,11 @@ public class Libro {
         this.stock = stock;
     }
 
-    public Date getAnioPublicacion() {
+    public int getAnioPublicacion() {
         return anioPublicacion;
     }
 
-    public void setAnioPublicacion(Date anioPublicacion) {
+    public void setAnioPublicacion(int anioPublicacion) {
         this.anioPublicacion = anioPublicacion;
     }
 
@@ -107,5 +103,4 @@ public class Libro {
     public String toString() {
         return "Libro{" + "idLibro=" + idLibro + ", ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", precio=" + precio + ", stock=" + stock + ", anioPublicacion=" + anioPublicacion + ", idGenero=" + idGenero + '}';
     }
-
 }

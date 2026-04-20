@@ -1,27 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "metodos_pago")
 public class MetodoPago {
-    
-    public MetodoPago(){
-        
-    }
-    @Id
-    int idPago;
-    String tipo;
 
-    public MetodoPago(int idPago, String tipo) {
-        this.idPago = idPago;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idPago;
+    private String tipo;
+
+    public MetodoPago() {
+    }
+
+    public MetodoPago(String tipo) {
         this.tipo = tipo;
     }
 
@@ -45,7 +38,4 @@ public class MetodoPago {
     public String toString() {
         return "MetodoPago{" + "idPago=" + idPago + ", tipo=" + tipo + '}';
     }
-    
-    
-    
 }

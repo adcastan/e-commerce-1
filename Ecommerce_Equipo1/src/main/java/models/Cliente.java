@@ -1,37 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
+import java.util.List;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "clientes")
 public class Cliente {
-    
-    public Cliente(){
-        
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idCliente;
+
+    private String nombreCliente;
+    private String correoElectronico;
+    private String contrasenia;
+
+    @OneToMany(mappedBy = "idCliente")
+    private List<Venta> ventas;
+
+    public Cliente() {
     }
 
-    public Cliente(int idCliente, String nombreCliente, String correoElectronico, String contrasenia) {
-        this.idCliente = idCliente;
+    public Cliente(String nombreCliente, String correoElectronico, String contrasenia) {
         this.nombreCliente = nombreCliente;
         this.correoElectronico = correoElectronico;
         this.contrasenia = contrasenia;
     }
-    
-    @Id
-    int idCliente;
-    @OneToOne
-    String nombreCliente;
-    @OneToOne
-    String correoElectronico;
-    @OneToOne
-    String contrasenia;
 
     public int getIdCliente() {
         return idCliente;
@@ -65,10 +59,16 @@ public class Cliente {
         this.contrasenia = contrasenia;
     }
 
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" + "idCliente=" + idCliente + ", nombreCliente=" + nombreCliente + ", correoElectronico=" + correoElectronico + ", contrasenia=" + contrasenia + '}';
     }
-    
-    
 }
