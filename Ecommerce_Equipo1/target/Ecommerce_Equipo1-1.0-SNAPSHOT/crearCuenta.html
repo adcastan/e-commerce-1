@@ -1,0 +1,121 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Crear Cuenta</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Felipa&family=Lugrasimo&family=Quintessential&display=swap" rel="stylesheet">
+        
+        <style>
+            :root {
+                --primario: #388659;
+                --secundario: #1C3738;
+                --exito: #909CC2;
+                --warning: #F08A4B;
+                --fondo: #0a0f0f;
+            }
+
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateX(50px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: linear-gradient(135deg, var(--fondo) 0%, var(--secundario) 100%);
+                font-family: 'Lugrasimo', cursive;
+                color: #fff;
+            }
+
+            .container {
+                animation: slideIn 0.6s ease-out;
+                background: rgba(28, 55, 56, 0.95);
+                padding: 50px;
+                border-radius: 15px;
+                border: 4px double var(--exito);
+                box-shadow: 0 0 40px rgba(0,0,0,0.9);
+                width: 100%;
+                max-width: 450px;
+                text-align: center;
+            }
+
+            h2 {
+                font-family: 'Felipa', serif;
+                font-size: 40px;
+                color: var(--exito);
+                margin-bottom: 30px;
+                text-shadow: 2px 2px 4px #000;
+            }
+
+            .form-group { margin-bottom: 15px; }
+
+            .row { display: flex; gap: 10px; }
+
+            input {
+                width: 100%;
+                padding: 12px;
+                background: #192021;
+                border: 2px solid var(--secundario);
+                color: #fff;
+                font-family: 'Lugrasimo', cursive;
+                box-sizing: border-box;
+            }
+
+            input:focus { border-color: var(--exito); outline: none; }
+
+            .btn {
+                width: 100%;
+                padding: 15px;
+                background: var(--exito);
+                color: var(--secundario);
+                border: 2px solid #fff;
+                font-family: 'Quintessential', cursive;
+                font-size: 22px;
+                cursor: pointer;
+                margin-top: 20px;
+                font-weight: bold;
+            }
+
+            .btn:hover { background: #fff; transform: translateY(-3px); }
+
+            .link {
+                display: block;
+                margin-top: 20px;
+                color: var(--warning);
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Crear Cuenta</h2>
+            <form action="ClienteServlet" method="POST">
+                <input type="hidden" name="accion" value="registrar">
+                
+                <div class="form-group row">
+                    <input type="text" name="nombre" placeholder="Nombre" required>
+                    <input type="text" name="apellido" placeholder="Apellido" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="correo" placeholder="Correo electrónico" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="contrasena" placeholder="Contraseña" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Confirmar contraseña" required>
+                </div>
+
+                <button type="submit" class="btn">Forjar Identidad</button>
+            </form>
+            
+            <a href="IniciarSesion.jsp" class="link">¿Ya posees la llave? Regresar</a>
+        </div>
+    </body>
+</html>
