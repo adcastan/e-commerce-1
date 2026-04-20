@@ -1,42 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
 import java.util.Date;
 
-/**
- *
- * @author Adrián
- */
 @Entity
 public class Libro {
 
-    public Libro() {
+    public Libro() {}
 
-    }
     @Id
-    int idLibro;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idLibro;
+
     String ISBN;
     String titulo;
     String autor;
-    int precio;
+    double precio;
     int stock;
     Date anioPublicacion;
-    @ManyToMany
-    Genero idGenero;
 
-    public Libro(int idLibro, String ISBN, String titulo, String autor, int precio, int stock, Date anioPublicacion, Genero idGenero) {
-        this.idLibro = idLibro;
+    @ManyToOne
+    @JoinColumn(name = "idGenero")
+    private Genero genero;
+
+    @ManyToOne
+    @JoinColumn(name = "idProveedor")
+    private Proveedor proveedor;
+
+    private String imagen; // URL o nombre del archivo de imagen
+
+    public Libro(String ISBN, String titulo, String autor, double precio, int stock, Date anioPublicacion, Genero genero, Proveedor proveedor, String imagen) {
         this.ISBN = ISBN;
         this.titulo = titulo;
         this.autor = autor;
         this.precio = precio;
         this.stock = stock;
         this.anioPublicacion = anioPublicacion;
-        this.idGenero = idGenero;
+        this.genero = genero;
+        this.proveedor = proveedor;
+        this.imagen = imagen;
     }
 
     public int getIdLibro() {
@@ -66,7 +68,7 @@ public class Libro {
     public String getAutor() {
         return autor;
     }
-
+    
     public void setAutor(String autor) {
         this.autor = autor;
     }
@@ -107,5 +109,4 @@ public class Libro {
     public String toString() {
         return "Libro{" + "idLibro=" + idLibro + ", ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", precio=" + precio + ", stock=" + stock + ", anioPublicacion=" + anioPublicacion + ", idGenero=" + idGenero + '}';
     }
-
 }
