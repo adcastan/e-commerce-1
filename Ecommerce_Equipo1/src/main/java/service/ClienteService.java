@@ -4,10 +4,16 @@
  */
 package service;
 
+import daos.ILibroDAO;
+import daos.LibroDAO;
+
 /**
  *
  * @author Adrián
  */
 public class ClienteService {
     
+    public ClienteService(){
+        
+    }
 }

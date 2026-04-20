@@ -4,37 +4,47 @@
  */
 package daos;
 
+import jakarta.persistence.EntityManager;
 import models.Venta;
+import util.JPAUtil;
 
 /**
  *
  * @author Adrián
  */
-public class VentaDAO implements IVentaDAO{
+public class VentaDAO implements IVentaDAO {
+
+    EntityManager em = JPAUtil.getInstance().getEntityManager();
 
     @Override
     public void guardar(Venta venta) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        em.getTransaction().begin();
+        em.persist(venta);
+        em.getTransaction().commit();
     }
 
     @Override
-    public Venta crearVenta(Venta venta) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void buscarVentaPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Venta buscarVentaPorId(int id) {
+        return em.find(Venta.class, id);
     }
 
     @Override
     public void actualizarVenta(Venta venta) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        em.getTransaction().begin();
+        em.merge(venta);
+        em.getTransaction().commit();
     }
 
     @Override
-    public void eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int eliminar(int id) {
+ em.getTransaction().begin();
+
+        Venta venta = em.find(Venta.class, id);
+
+        em.remove(venta);
+
+        em.getTransaction().commit();
+        return id;   
     }
-    
+
 }

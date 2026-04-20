@@ -15,11 +15,10 @@ import models.Libro;
 public interface IClienteDAO {
      void guardar(Cliente cliente);
     
-    public Cliente crearCliente(Cliente cliente);
-
-    Long buscarPorId(Long id);
+    Cliente buscarPorId(int id);
 
     void actualizar(Cliente cliente);
 
-    Long eliminar(Long id);
+    int eliminar(int id);
+    
 }

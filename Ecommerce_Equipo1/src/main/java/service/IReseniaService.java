@@ -4,19 +4,19 @@
  */
 package service;
 
-import models.Venta;
+import models.Resenia;
 
 /**
  *
  * @author Adrián
  */
-public interface IVentaService {
-         
-    public Venta crearVenta(Venta venta);
-    
-    public void buscarVentaPorId(int id);
-    
-    public void actualizarVenta(Venta venta);
-    
-    public void eliminar(int id);
+public interface IReseniaService {
+
+    public Resenia crearCliente(Resenia resenia);
+
+    Long buscarPorId(int id);
+
+    void actualizar(Resenia resenia);
+
+    Long eliminar(int id);
 }

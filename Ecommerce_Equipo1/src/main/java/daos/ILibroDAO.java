@@ -15,10 +15,6 @@ import models.Libro;
 public interface ILibroDAO {
     void guardar(Libro libro);
     
-    public Libro crearLibro(Libro libro);
-
-    Libro buscarPorCorreoYContrasenia(String titulo);
-
     Libro buscarPorGenero(String genero);
 
     void actualizar(Libro libro);

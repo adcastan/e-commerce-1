@@ -4,10 +4,21 @@
  */
 package service;
 
+import models.Cliente;
+
 /**
  *
  * @author Adrián
  */
 public interface IClienteService {
-//    public ClienteDTO agregarCliente(Cliente cliente);
-}
+
+    public Cliente crearCliente(Cliente cliente);
+
+    Long buscarPorId(int id);
+
+    void actualizar(Cliente cliente);
+
+    Long eliminar(int id);
+    
+    }
+

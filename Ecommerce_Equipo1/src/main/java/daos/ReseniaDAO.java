@@ -4,37 +4,47 @@
  */
 package daos;
 
+import jakarta.persistence.EntityManager;
 import models.Resenia;
+import util.JPAUtil;
 
 /**
  *
  * @author Adrián
  */
-public class ReseniaDAO implements IReseniaDAO{
+public class ReseniaDAO implements IReseniaDAO {
+
+    EntityManager em = JPAUtil.getInstance().getEntityManager();
 
     @Override
     public void guardar(Resenia resenia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        em.getTransaction().begin();
+        em.persist(resenia);
+        em.getTransaction().commit();
     }
 
     @Override
-    public Resenia crearCliente(Resenia resenia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Long buscarPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Resenia buscarPorId(int id) {
+        return em.find(Resenia.class, id);
     }
 
     @Override
     public void actualizar(Resenia resenia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        em.getTransaction().begin();
+        em.merge(resenia);
+        em.getTransaction().commit();
     }
 
     @Override
-    public Long eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int eliminar(int id) {
+        em.getTransaction().begin();
+
+        Resenia resenia = em.find(Resenia.class, id);
+
+        em.remove(resenia);
+
+        em.getTransaction().commit();
+        return id;
     }
-    
+
 }

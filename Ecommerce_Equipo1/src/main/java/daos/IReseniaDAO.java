@@ -13,11 +13,9 @@ import models.Resenia;
 public interface IReseniaDAO {
      void guardar(Resenia resenia);
     
-    public Resenia crearCliente(Resenia resenia);
-
-    Long buscarPorId(Long id);
+    Resenia buscarPorId(int id);
 
     void actualizar(Resenia resenia);
 
-    Long eliminar(Long id);
+    int eliminar(int id);
 }

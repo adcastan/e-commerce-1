@@ -2,20 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package service;
-
-import daos.ILibroDAO;
-import daos.LibroDAO;
+package filters;
 
 /**
  *
  * @author Adrián
  */
-public class LibroService {
-
-    private final ILibroDAO libroDAO = new LibroDAO();
-
-    public void crearLibro() {
-
-    }
+public class AutentificacionFiltro {
+    
 }

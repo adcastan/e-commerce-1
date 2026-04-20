@@ -4,10 +4,22 @@
  */
 package service;
 
+import models.Libro;
+
 /**
  *
  * @author Adrián
  */
 public interface ILibroService {
+
+    public Libro crearLibro(Libro libro);
+
+    Libro buscarPorCorreoYContrasenia(String titulo);
+
+    Libro buscarPorGenero(String genero);
     
+
+    void actualizar(Libro libro);
+
+    void eliminar(int id);
 }

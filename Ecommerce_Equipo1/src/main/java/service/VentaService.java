@@ -4,10 +4,16 @@
  */
 package service;
 
+import daos.IVentaDAO;
+import daos.VentaDAO;
+
 /**
  *
  * @author Adrián
  */
 public class VentaService {
+    
+        private final IVentaDAO libroDAO = new VentaDAO();
+
     
 }

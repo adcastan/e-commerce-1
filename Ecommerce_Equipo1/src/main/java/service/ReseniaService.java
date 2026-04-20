@@ -4,18 +4,10 @@
  */
 package service;
 
-import daos.ILibroDAO;
-import daos.LibroDAO;
-
 /**
  *
  * @author Adrián
  */
-public class LibroService {
-
-    private final ILibroDAO libroDAO = new LibroDAO();
-
-    public void crearLibro() {
-
-    }
+public class ReseniaService {
+    
 }

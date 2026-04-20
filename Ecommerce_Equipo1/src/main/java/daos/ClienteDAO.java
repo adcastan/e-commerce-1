@@ -4,39 +4,54 @@
  */
 package daos;
 
+import jakarta.persistence.EntityManager;
 import java.util.List;
 import models.Cliente;
+import util.JPAUtil;
 
 /**
  *
  * @author Adrián
  */
-public class ClienteDAO implements IClienteDAO{
+public class ClienteDAO implements IClienteDAO {
+
+    EntityManager em = JPAUtil.getInstance().getEntityManager();
 
     @Override
     public void guardar(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        em.getTransaction().begin();
+        em.persist(cliente);
+        em.getTransaction().commit();
 
-    @Override
-    public Cliente crearCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Long buscarPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void actualizar(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        em.getTransaction().begin();
+        em.merge(cliente);
+        em.getTransaction().commit();
+
     }
 
     @Override
-    public Long eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int eliminar(int id) {
+
+        em.getTransaction().begin();
+
+        Cliente cliente = em.find(Cliente.class, id);
+
+        em.remove(cliente);
+
+        em.getTransaction().commit();
+        return id;
+
     }
 
-    
+    @Override
+    public Cliente buscarPorId(int id) {
+        return em.find(Cliente.class, id);
+    }
+
+
 }

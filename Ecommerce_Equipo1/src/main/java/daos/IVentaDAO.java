@@ -13,12 +13,10 @@ import models.Venta;
 public interface IVentaDAO {
     
     void guardar(Venta venta);
-    
-    public Venta crearVenta(Venta venta);
-    
-    public void buscarVentaPorId(int id);
+       
+    public Venta buscarVentaPorId(int id);
     
     public void actualizarVenta(Venta venta);
     
-    public void eliminar(int id);
+    public int eliminar(int id);
 }
