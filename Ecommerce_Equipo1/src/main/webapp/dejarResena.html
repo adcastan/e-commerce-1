@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dejar rese&ntilde;a - Hojas Sueltas</title>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
+
+<main class="contenedor seccion">
+    <div class="formulario-pagina">
+        <h1>Dejar rese&ntilde;a</h1>
+        <p class="ayuda" id="info-libro">cargando...</p>
+        <div id="alerta"></div>
+        <form id="form-resena">
+            <label>
+                Calificaci&oacute;n
+                <div class="estrellas-input" id="estrellas">
+                    <span data-valor="1">&#9734;</span>
+                    <span data-valor="2">&#9734;</span>
+                    <span data-valor="3">&#9734;</span>
+                    <span data-valor="4">&#9734;</span>
+                    <span data-valor="5">&#9734;</span>
+                </div>
+                <input type="hidden" name="calificacion" required>
+            </label>
+            <label>
+                Comentario
+                <textarea name="comentario" rows="5" placeholder="cu\u00e9ntanos qu\u00e9 te pareci\u00f3 el libro"></textarea>
+            </label>
+            <button type="submit" class="boton principal">Publicar rese&ntilde;a</button>
+            <a href="misPedidos.html" class="boton secundario" style="text-align:center;">Cancelar</a>
+        </form>
+    </div>
+</main>
+
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
+
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+if (!Auth.estaAutenticado()) {
+    sessionStorage.setItem('regresoLogin', window.location.pathname + window.location.search);
+    window.location.href = 'iniciarSesion.html';
+}
+
+const idLibro = parseInt(new URLSearchParams(window.location.search).get('libro'));
+let calificacion = 0;
+
+document.querySelectorAll('#estrellas span').forEach(s => {
+    s.addEventListener('click', () => {
+        calificacion = parseInt(s.dataset.valor);
+        document.querySelector('input[name="calificacion"]').value = calificacion;
+        document.querySelectorAll('#estrellas span').forEach(x => {
+            const v = parseInt(x.dataset.valor);
+            x.textContent = v <= calificacion ? '\u2605' : '\u2606';
+            x.classList.toggle('activa', v <= calificacion);
+        });
+    });
+});
+
+(async function cargar() {
+    if (!idLibro) {
+        document.getElementById('info-libro').textContent = 'libro no especificado';
+        return;
+    }
+    try {
+        const libro = await llamarApi('GET', '/productos/' + idLibro);
+        document.getElementById('info-libro').innerHTML =
+            'sobre <strong>' + escaparHtml(libro.titulo) + '</strong> de ' + escaparHtml(libro.autor);
+    } catch (e) {
+        document.getElementById('info-libro').textContent = 'no se pudo cargar el libro';
+    }
+})();
+
+document.getElementById('form-resena').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.getElementById('alerta').innerHTML = '';
+    if (calificacion < 1) {
+        document.getElementById('alerta').innerHTML = '<div class="alerta error">selecciona una calificaci\u00f3n</div>';
+        return;
+    }
+    const fd = new FormData(e.target);
+    const datos = {
+        idLibro,
+        calificacion: parseInt(fd.get('calificacion')),
+        comentario: fd.get('comentario')
+    };
+    try {
+        await llamarApi('POST', '/resenas', datos, true);
+        notificar('rese\u00f1a publicada');
+        setTimeout(() => window.location.href = 'detalleProducto.html?id=' + idLibro, 800);
+    } catch (err) {
+        document.getElementById('alerta').innerHTML = '<div class="alerta error">' + escaparHtml(err.message) + '</div>';
+    }
+});
+</script>
+</body>
+</html>

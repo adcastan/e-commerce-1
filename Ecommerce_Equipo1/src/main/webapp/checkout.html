@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Hojas Sueltas</title>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
+
+<main class="contenedor seccion">
+    <h2>Finaliza tu compra</h2>
+    <div id="alerta"></div>
+    <div class="layout-checkout">
+        <div>
+            <section class="panel-checkout">
+                <h3>Direcci&oacute;n de env&iacute;o</h3>
+                <label style="display:block;margin-bottom:0.5rem;">
+                    <textarea id="direccion" rows="3" style="width:100%;padding:0.7rem;border:1px solid var(--borde);border-radius:6px;font-family:inherit;background:var(--crema-claro);"></textarea>
+                </label>
+            </section>
+
+            <section class="panel-checkout">
+                <h3>M&eacute;todo de pago</h3>
+                <div id="opciones-pago" class="opciones-pago"></div>
+            </section>
+
+            <section class="panel-checkout" id="panel-tarjeta" style="display:none;">
+                <h3>Datos de la tarjeta</h3>
+                <p style="font-size:0.85rem;color:var(--gris)">simulaci&oacute;n: usa cualquier tarjeta v&aacute;lida (ej: 4111111111111111)</p>
+                <div style="display:flex;flex-direction:column;gap:0.7rem;">
+                    <label style="display:flex;flex-direction:column;font-size:0.85rem;">
+                        Nombre del titular
+                        <input type="text" id="titular" style="padding:0.6rem;border:1px solid var(--borde);border-radius:6px;background:var(--crema-claro);">
+                    </label>
+                    <label style="display:flex;flex-direction:column;font-size:0.85rem;">
+                        N&uacute;mero de tarjeta
+                        <input type="text" id="numero" maxlength="19" placeholder="1234 5678 9012 3456" style="padding:0.6rem;border:1px solid var(--borde);border-radius:6px;background:var(--crema-claro);">
+                    </label>
+                    <div class="fila-grid-2">
+                        <label style="display:flex;flex-direction:column;font-size:0.85rem;">
+                            Vencimiento
+                            <input type="text" id="vencimiento" maxlength="5" placeholder="MM/AA" style="padding:0.6rem;border:1px solid var(--borde);border-radius:6px;background:var(--crema-claro);">
+                        </label>
+                        <label style="display:flex;flex-direction:column;font-size:0.85rem;">
+                            CVV
+                            <input type="text" id="cvv" maxlength="4" placeholder="123" style="padding:0.6rem;border:1px solid var(--borde);border-radius:6px;background:var(--crema-claro);">
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside>
+            <div class="resumen-carrito">
+                <h3 style="margin-top:0;color:var(--verde-oscuro);">Resumen</h3>
+                <div id="lista-resumen"></div>
+                <div class="total"><span>Total</span><span id="total-resumen">$0.00</span></div>
+                <button id="btn-pagar" class="boton principal">Completar compra</button>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
+
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+if (!Auth.estaAutenticado()) {
+    sessionStorage.setItem('regresoLogin', 'checkout.html');
+    window.location.href = 'iniciarSesion.html';
+}
+if (Carrito.leer().length === 0) {
+    window.location.href = 'carrito.html';
+}
+
+const cliente = Auth.obtenerCliente();
+let metodosPago = [];
+let metodoSeleccionado = null;
+
+async function inicializar() {
+    try {
+        metodosPago = await llamarApi('GET', '/metodos-pago');
+        renderizarMetodos();
+    } catch (e) {
+        document.getElementById('opciones-pago').innerHTML = '<p>no se pudieron cargar los m\u00e9todos</p>';
+    }
+    if (cliente && cliente.direccion) {
+        document.getElementById('direccion').value = cliente.direccion;
+    }
+    pintarResumen();
+}
+
+function pintarResumen() {
+    const items = Carrito.leer();
+    document.getElementById('lista-resumen').innerHTML = items.map(i => `
+        <div style="display:flex;justify-content:space-between;font-size:0.9rem;padding:0.3rem 0;border-bottom:1px solid var(--borde);">
+            <span>${escaparHtml(i.titulo)} <small>x${i.cantidad}</small></span>
+            <span>${formatearMoneda(i.precio * i.cantidad)}</span>
+        </div>
+    `).join('');
+    document.getElementById('total-resumen').textContent = formatearMoneda(Carrito.total());
+}
+
+function renderizarMetodos() {
+    const cont = document.getElementById('opciones-pago');
+    cont.innerHTML = metodosPago.map(m => `
+        <label data-id="${m.idPago}">
+            <input type="radio" name="metodo" value="${m.idPago}">
+            <span>${escaparHtml(m.tipo.replace('_', ' '))}</span>
+        </label>
+    `).join('');
+    cont.querySelectorAll('input[name="metodo"]').forEach(r => {
+        r.addEventListener('change', () => {
+            metodoSeleccionado = metodosPago.find(m => m.idPago == r.value);
+            cont.querySelectorAll('label').forEach(l => l.classList.remove('seleccionado'));
+            r.closest('label').classList.add('seleccionado');
+            document.getElementById('panel-tarjeta').style.display =
+                metodoSeleccionado.tipo === 'TARJETA' ? 'block' : 'none';
+        });
+    });
+}
+
+document.getElementById('btn-pagar').addEventListener('click', async () => {
+    document.getElementById('alerta').innerHTML = '';
+    const direccion = document.getElementById('direccion').value.trim();
+    if (!direccion) {
+        document.getElementById('alerta').innerHTML = '<div class="alerta error">la direcci\u00f3n de env\u00edo es obligatoria</div>';
+        return;
+    }
+    if (!metodoSeleccionado) {
+        document.getElementById('alerta').innerHTML = '<div class="alerta error">selecciona un m\u00e9todo de pago</div>';
+        return;
+    }
+
+    const datos = {
+        direccionEnvio: direccion,
+        idPago: metodoSeleccionado.idPago,
+        items: Carrito.leer().map(i => ({ idLibro: i.idLibro, cantidad: i.cantidad }))
+    };
+
+    if (metodoSeleccionado.tipo === 'TARJETA') {
+        datos.datosPago = {
+            nombreTitular: document.getElementById('titular').value.trim(),
+            numeroTarjeta: document.getElementById('numero').value.replace(/\s/g, ''),
+            vencimiento: document.getElementById('vencimiento').value.trim(),
+            cvv: document.getElementById('cvv').value.trim()
+        };
+    }
+
+    const btn = document.getElementById('btn-pagar');
+    btn.disabled = true;
+    btn.textContent = 'procesando...';
+    try {
+        const venta = await llamarApi('POST', '/pedidos', datos, true);
+        Carrito.limpiar();
+        sessionStorage.setItem('ultimoPedido', JSON.stringify(venta));
+        window.location.href = 'pedidoConfirmado.html?numero=' + encodeURIComponent(venta.numeroPedido);
+    } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Completar compra';
+        document.getElementById('alerta').innerHTML = '<div class="alerta error">' + escaparHtml(err.message) + '</div>';
+    }
+});
+
+const numeroInput = document.getElementById('numero');
+numeroInput.addEventListener('input', () => {
+    let v = numeroInput.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
+    numeroInput.value = v.replace(/(.{4})/g, '$1 ').trim();
+});
+
+const vencInput = document.getElementById('vencimiento');
+vencInput.addEventListener('input', () => {
+    let v = vencInput.value.replace(/[^0-9]/g, '');
+    if (v.length > 2) v = v.substring(0, 2) + '/' + v.substring(2, 4);
+    vencInput.value = v;
+});
+
+inicializar();
+</script>
+</body>
+</html>

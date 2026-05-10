@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido confirmado - Hojas Sueltas</title>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
+
+<main class="contenedor seccion">
+    <div style="max-width:600px;margin:2rem auto;text-align:center;background:white;padding:3rem 2rem;border-radius:12px;box-shadow:var(--sombra);">
+        <h1 style="font-family:'Felipa',cursive;color:var(--verde);font-size:2.4rem;margin-bottom:0.5rem;">&iexcl;Gracias por tu compra!</h1>
+        <p style="color:var(--gris);margin-bottom:2rem;">tu pedido fue registrado correctamente y enviaremos los detalles a tu correo electr&oacute;nico</p>
+        <div id="resumen-pedido" style="text-align:left;background:var(--crema-claro);padding:1.5rem;border-radius:8px;margin-bottom:2rem;"></div>
+        <a href="misPedidos.html" class="boton principal">ver mis pedidos</a>
+        <a href="index.html" class="boton secundario" style="margin-left:0.5rem;">seguir comprando</a>
+    </div>
+</main>
+
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
+
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+const numero = new URLSearchParams(window.location.search).get('numero');
+const ultimo = JSON.parse(sessionStorage.getItem('ultimoPedido') || 'null');
+const cont = document.getElementById('resumen-pedido');
+if (ultimo) {
+    cont.innerHTML = `
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+            <strong>n\u00famero de pedido:</strong> <span>${escaparHtml(ultimo.numeroPedido)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;">
+            <strong>fecha:</strong> <span>${formatearFecha(ultimo.fechaHora)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;">
+            <strong>total:</strong> <span style="color:var(--verde);font-weight:bold;">${formatearMoneda(ultimo.total)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;">
+            <strong>env\u00edo a:</strong> <span>${escaparHtml(ultimo.direccionEnvio)}</span>
+        </div>
+    `;
+} else if (numero) {
+    cont.innerHTML = `<p>n\u00famero de pedido: <strong>${escaparHtml(numero)}</strong></p>`;
+}
+</script>
+</body>
+</html>

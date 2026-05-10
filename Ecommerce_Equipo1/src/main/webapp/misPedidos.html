@@ -1,55 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis pedidos - Hojas Sueltas</title>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
 
-    <head>
-
-        <meta charset="UTF-8">
-        <title>Mis pedidos</title>
-
-        <link rel="stylesheet" href="styles.css">
-
-    </head>
-
-    <body>
-
-        <div class="container">
-
-            <h2>Mis pedidos</h2>
-
-            <div class="cart-container">
-
-                <h3>En camino</h3>
-
-                <div class="cart-item">
-
-                    <div class="book-img"></div>
-
-                    <div>
-                        Libro ejemplo
-                        <br>
-                        Estado: En camino
-                    </div>
-
-                </div>
-
-                <h3>Pedidos pasados</h3>
-
-                <div class="cart-item">
-
-                    <div class="book-img"></div>
-
-                    <div>
-                        Libro ejemplo
-                        <br>
-                        Entregado
-                    </div>
-
-                </div>
-
+<main class="contenedor seccion">
+    <h2>Mi cuenta</h2>
+    <div class="barra-perfil">
+        <aside class="menu-perfil">
+            <a href="miPerfil.html">Inicio</a>
+            <a href="editarPerfil.html">Editar mi informaci&oacute;n</a>
+            <a href="misPedidos.html" class="activo">Mis pedidos</a>
+            <a href="#" id="cerrar-sesion" style="color:var(--rojo)">Cerrar sesi&oacute;n</a>
+        </aside>
+        <section class="contenido-perfil">
+            <h3>Mis pedidos</h3>
+            <div id="lista-pedidos" class="lista-pedidos">
+                <div class="cargando">Cargando...</div>
             </div>
+        </section>
+    </div>
+</main>
 
-        </div>
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
 
-    </body>
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+if (!Auth.estaAutenticado()) {
+    sessionStorage.setItem('regresoLogin', 'misPedidos.html');
+    window.location.href = 'iniciarSesion.html';
+}
 
+document.getElementById('cerrar-sesion').addEventListener('click', (e) => {
+    e.preventDefault();
+    Auth.cerrarSesion();
+    window.location.href = 'index.html';
+});
+
+(async function cargar() {
+    const cliente = Auth.obtenerCliente();
+    const cont = document.getElementById('lista-pedidos');
+    try {
+        const pedidos = await llamarApi('GET', '/pedidos/usuario/' + cliente.idCliente, null, true);
+        if (!pedidos || pedidos.length === 0) {
+            cont.innerHTML = '<p class="estado-vacio">a\u00fan no tienes pedidos</p>';
+            return;
+        }
+        cont.innerHTML = pedidos.map(p => `
+            <article class="tarjeta-pedido">
+                <div class="cabecera-pedido">
+                    <span class="numero-pedido">${escaparHtml(p.numeroPedido)}</span>
+                    <span class="estado-pedido ${p.estado.toLowerCase()}">${escaparHtml(p.estado)}</span>
+                </div>
+                <p style="font-size:0.85rem;color:var(--gris);margin:0 0 0.75rem;">
+                    ${formatearFecha(p.fechaHora)} \u00b7 ${p.detalles.length} ${p.detalles.length === 1 ? 'art\u00edculo' : 'art\u00edculos'} \u00b7 <strong style="color:var(--verde-oscuro)">${formatearMoneda(p.total)}</strong>
+                </p>
+                <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                    ${p.detalles.slice(0, 4).map(d => `
+                        <div style="display:flex;gap:0.5rem;align-items:center;font-size:0.85rem;background:var(--crema-claro);padding:0.4rem 0.6rem;border-radius:6px;">
+                            ${d.imagenUrl ? `<img src="${escaparHtml(d.imagenUrl)}" alt="" style="width:30px;height:42px;object-fit:cover;border-radius:3px;">` : ''}
+                            <div>
+                                <div>${escaparHtml(d.tituloLibro)}</div>
+                                <small style="color:var(--gris)">x${d.cantidad}</small>
+                            </div>
+                            ${p.estado === 'ENTREGADO' ? `<a href="dejarResena.html?libro=${d.idLibro}" class="boton-link" style="color:var(--verde);text-decoration:underline;">rese\u00f1ar</a>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            </article>
+        `).join('');
+    } catch (err) {
+        cont.innerHTML = '<p class="estado-vacio">no se pudieron cargar tus pedidos</p>';
+    }
+})();
+</script>
+</body>
 </html>
