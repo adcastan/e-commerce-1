@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hojas Sueltas - Librer&iacute;a en l&iacute;nea</title>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca por t&iacute;tulo, autor o ISBN" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="contenedor">
+        <h1>Bienvenido a Hojas Sueltas</h1>
+        <p>Una colecci&oacute;n curada de cl&aacute;sicos y novedades para llenar tus estantes.</p>
+    </div>
+</section>
+
+<main class="contenedor seccion">
+    <section>
+        <h2>Destacados</h2>
+        <div id="destacados" class="cuadricula-libros">
+            <div class="cargando">Cargando...</div>
+        </div>
+    </section>
+
+    <section style="margin-top:3rem;">
+        <h2>Cat&aacute;logo</h2>
+        <div id="catalogo" class="cuadricula-libros">
+            <div class="cargando">Cargando...</div>
+        </div>
+    </section>
+</main>
+
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+        <p>Equipo 1 &middot; Aplicaciones Web ITSON</p>
+    </div>
+</footer>
+
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+async function cargarPagina() {
+    try {
+        const destacados = await llamarApi('GET', '/productos?destacados=true&limite=4');
+        renderizarLista('destacados', destacados);
+    } catch (e) {
+        document.getElementById('destacados').innerHTML = '<p class="estado-vacio">no se pudieron cargar los destacados</p>';
+    }
+    try {
+        const catalogo = await llamarApi('GET', '/productos');
+        renderizarLista('catalogo', catalogo);
+    } catch (e) {
+        document.getElementById('catalogo').innerHTML = '<p class="estado-vacio">no se pudo cargar el cat\u00e1logo</p>';
+    }
+}
+
+function renderizarLista(idContenedor, libros) {
+    const cont = document.getElementById(idContenedor);
+    if (!libros || libros.length === 0) {
+        cont.innerHTML = '<p class="estado-vacio">no hay libros para mostrar</p>';
+        return;
+    }
+    cont.innerHTML = libros.map(l => `
+        <article class="tarjeta-libro">
+            <a href="detalleProducto.html?id=${l.idLibro}">
+                <div class="imagen">
+                    ${l.imagenUrl ? `<img src="${escaparHtml(l.imagenUrl)}" alt="${escaparHtml(l.titulo)}">` : ''}
+                </div>
+                <div class="info">
+                    <span class="titulo">${escaparHtml(l.titulo)}</span>
+                    <span class="autor">${escaparHtml(l.autor)}</span>
+                    <span class="precio">${formatearMoneda(l.precio)}</span>
+                    ${l.stock <= 0 ? '<span class="agotado">agotado</span>' : (l.stock < 5 ? `<span class="stock-bajo">solo ${l.stock} disponibles</span>` : '')}
+                </div>
+            </a>
+        </article>
+    `).join('');
+}
+
+cargarPagina();
+</script>
+</body>
+</html>

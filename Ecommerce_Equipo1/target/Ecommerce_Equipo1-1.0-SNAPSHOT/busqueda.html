@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B&uacute;squeda - Hojas Sueltas</title>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca por t&iacute;tulo, autor o ISBN" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
+
+<main class="contenedor seccion">
+    <h2 id="titulo-busqueda">Resultados</h2>
+
+    <form id="filtros" class="filtros">
+        <label>
+            T&eacute;rmino
+            <input type="text" name="q" id="filtro-q">
+        </label>
+        <label>
+            G&eacute;nero
+            <select name="genero" id="filtro-genero">
+                <option value="">todos</option>
+            </select>
+        </label>
+        <label>
+            Precio m&iacute;nimo
+            <input type="number" name="precioMin" id="filtro-pmin" step="0.01" min="0">
+        </label>
+        <label>
+            Precio m&aacute;ximo
+            <input type="number" name="precioMax" id="filtro-pmax" step="0.01" min="0">
+        </label>
+        <button type="submit" class="boton principal">Filtrar</button>
+    </form>
+
+    <div id="resultados" class="cuadricula-libros">
+        <div class="cargando">Cargando...</div>
+    </div>
+</main>
+
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+        <p>Equipo 1 &middot; Aplicaciones Web ITSON</p>
+    </div>
+</footer>
+
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const formFiltros = document.getElementById('filtros');
+
+async function cargarGeneros() {
+    try {
+        const generos = await llamarApi('GET', '/generos');
+        const sel = document.getElementById('filtro-genero');
+        generos.forEach(g => {
+            const opt = document.createElement('option');
+            opt.value = g.idGenero;
+            opt.textContent = g.nombre;
+            sel.appendChild(opt);
+        });
+        if (params.get('genero')) sel.value = params.get('genero');
+    } catch (e) {}
+}
+
+async function buscar() {
+    document.getElementById('filtro-q').value = params.get('q') || '';
+    document.getElementById('filtro-pmin').value = params.get('precioMin') || '';
+    document.getElementById('filtro-pmax').value = params.get('precioMax') || '';
+
+    const queryParts = [];
+    for (const [k, v] of params.entries()) {
+        if (v) queryParts.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
+    }
+    const query = queryParts.length ? '?' + queryParts.join('&') : '';
+
+    const titulo = document.getElementById('titulo-busqueda');
+    if (params.get('q')) {
+        titulo.textContent = 'Resultados para "' + params.get('q') + '"';
+    } else {
+        titulo.textContent = 'Cat\u00e1logo';
+    }
+
+    try {
+        const libros = await llamarApi('GET', '/productos' + query);
+        renderizar(libros);
+    } catch (e) {
+        document.getElementById('resultados').innerHTML = '<p class="estado-vacio">error al cargar resultados</p>';
+    }
+}
+
+function renderizar(libros) {
+    const cont = document.getElementById('resultados');
+    if (!libros || libros.length === 0) {
+        cont.innerHTML = '<p class="estado-vacio">no se encontraron libros con esos criterios</p>';
+        return;
+    }
+    cont.innerHTML = `<p style="grid-column:1/-1;color:var(--gris)">${libros.length} resultados</p>` +
+        libros.map(l => `
+        <article class="tarjeta-libro">
+            <a href="detalleProducto.html?id=${l.idLibro}">
+                <div class="imagen">
+                    ${l.imagenUrl ? `<img src="${escaparHtml(l.imagenUrl)}" alt="${escaparHtml(l.titulo)}">` : ''}
+                </div>
+                <div class="info">
+                    <span class="titulo">${escaparHtml(l.titulo)}</span>
+                    <span class="autor">${escaparHtml(l.autor)}</span>
+                    <span class="precio">${formatearMoneda(l.precio)}</span>
+                    ${l.stock <= 0 ? '<span class="agotado">agotado</span>' : ''}
+                </div>
+            </a>
+        </article>
+    `).join('');
+}
+
+formFiltros.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(formFiltros);
+    const nuevos = new URLSearchParams();
+    for (const [k, v] of fd.entries()) {
+        if (v && v !== '') nuevos.set(k, v);
+    }
+    window.location.href = 'busqueda.html?' + nuevos.toString();
+});
+
+(async function() {
+    await cargarGeneros();
+    await buscar();
+})();
+</script>
+</body>
+</html>

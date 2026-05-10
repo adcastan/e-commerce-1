@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil - Hojas Sueltas</title>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
+
+<main class="contenedor seccion">
+    <h2>Mi cuenta</h2>
+    <div class="barra-perfil">
+        <aside class="menu-perfil">
+            <a href="miPerfil.html" class="activo">Inicio</a>
+            <a href="editarPerfil.html">Editar mi informaci&oacute;n</a>
+            <a href="misPedidos.html">Mis pedidos</a>
+            <a href="#" id="cerrar-sesion" class="peligro" style="color:var(--rojo)">Cerrar sesi&oacute;n</a>
+        </aside>
+        <section class="contenido-perfil">
+            <div class="caja" style="background:white;padding:1.5rem;border-radius:10px;border:1px solid var(--borde);">
+                <h3 style="margin-top:0;color:var(--verde-oscuro)">Hola, <span id="nombre-cliente"></span></h3>
+                <dl id="info-cliente"></dl>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
+
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+if (!Auth.estaAutenticado()) {
+    sessionStorage.setItem('regresoLogin', 'miPerfil.html');
+    window.location.href = 'iniciarSesion.html';
+}
+
+document.getElementById('cerrar-sesion').addEventListener('click', (e) => {
+    e.preventDefault();
+    Auth.cerrarSesion();
+    window.location.href = 'index.html';
+});
+
+(async function cargar() {
+    try {
+        const c = await llamarApi('GET', '/perfil', null, true);
+        document.getElementById('nombre-cliente').textContent = c.nombre + ' ' + c.apellido;
+        document.getElementById('info-cliente').innerHTML = `
+            <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem 1rem;margin-top:1rem;">
+                <dt style="color:var(--gris)">Correo</dt><dd style="margin:0;">${escaparHtml(c.correo)}</dd>
+                <dt style="color:var(--gris)">Tel\u00e9fono</dt><dd style="margin:0;">${escaparHtml(c.telefono || '\u2014')}</dd>
+                <dt style="color:var(--gris)">Direcci\u00f3n</dt><dd style="margin:0;">${escaparHtml(c.direccion || '\u2014')}</dd>
+                <dt style="color:var(--gris)">Miembro desde</dt><dd style="margin:0;">${formatearFecha(c.fechaRegistro)}</dd>
+            </div>
+        `;
+    } catch (e) {}
+})();
+</script>
+</body>
+</html>
