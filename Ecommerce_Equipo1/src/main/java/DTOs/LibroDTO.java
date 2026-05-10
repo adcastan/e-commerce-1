@@ -1,104 +1,72 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTOs;
 
-import java.util.Date;
-import models.Genero;
-
-/**
- *
- * @author Adrián
- */
 public class LibroDTO {
 
-    int idLibro;
-    String ISBN;
-    String titulo;
-    String autor;
-    int precio;
-    int stock;
-    Date anioPublicacion;
-    Genero idGenero;
+    private Integer idLibro;
+    private String isbn;
+    private String titulo;
+    private String autor;
+    private String descripcion;
+    private double precio;
+    private int stock;
+    private Integer anioPublicacion;
+    private String editorial;
+    private String imagenUrl;
+    private boolean destacado;
+    private boolean activo;
+    private Integer idGenero;
+    private String nombreGenero;
+    private Double calificacionPromedio;
+    private Integer cantidadResenias;
 
     public LibroDTO() {
     }
 
-    public LibroDTO(int idLibro, String ISBN, String titulo, String autor, int precio, int stock, Date anioPublicacion, Genero idGenero) {
-        this.idLibro = idLibro;
-        this.ISBN = ISBN;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.precio = precio;
-        this.stock = stock;
-        this.anioPublicacion = anioPublicacion;
-        this.idGenero = idGenero;
-    }
+    public Integer getIdLibro() { return idLibro; }
+    public void setIdLibro(Integer idLibro) { this.idLibro = idLibro; }
 
-    public int getIdLibro() {
-        return idLibro;
-    }
+    public String getIsbn() { return isbn; }
+    public void setIsbn(String isbn) { this.isbn = isbn; }
 
-    public void setIdLibro(int idLibro) {
-        this.idLibro = idLibro;
-    }
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public String getISBN() {
-        return ISBN;
-    }
+    public String getAutor() { return autor; }
+    public void setAutor(String autor) { this.autor = autor; }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public String getTitulo() {
-        return titulo;
-    }
+    public double getPrecio() { return precio; }
+    public void setPrecio(double precio) { this.precio = precio; }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
+    public int getStock() { return stock; }
+    public void setStock(int stock) { this.stock = stock; }
 
-    public String getAutor() {
-        return autor;
-    }
+    public Integer getAnioPublicacion() { return anioPublicacion; }
+    public void setAnioPublicacion(Integer anioPublicacion) { this.anioPublicacion = anioPublicacion; }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
+    public String getEditorial() { return editorial; }
+    public void setEditorial(String editorial) { this.editorial = editorial; }
 
-    public int getPrecio() {
-        return precio;
-    }
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
 
-    public void setPrecio(int precio) {
-        this.precio = precio;
-    }
+    public boolean isDestacado() { return destacado; }
+    public void setDestacado(boolean destacado) { this.destacado = destacado; }
 
-    public int getStock() {
-        return stock;
-    }
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+    public Integer getIdGenero() { return idGenero; }
+    public void setIdGenero(Integer idGenero) { this.idGenero = idGenero; }
 
-    public Date getAnioPublicacion() {
-        return anioPublicacion;
-    }
+    public String getNombreGenero() { return nombreGenero; }
+    public void setNombreGenero(String nombreGenero) { this.nombreGenero = nombreGenero; }
 
-    public void setAnioPublicacion(Date anioPublicacion) {
-        this.anioPublicacion = anioPublicacion;
-    }
+    public Double getCalificacionPromedio() { return calificacionPromedio; }
+    public void setCalificacionPromedio(Double calificacionPromedio) { this.calificacionPromedio = calificacionPromedio; }
 
-    public Genero getIdGenero() {
-        return idGenero;
-    }
-
-    public void setIdGenero(Genero idGenero) {
-        this.idGenero = idGenero;
-    }
-    
-    
+    public Integer getCantidadResenias() { return cantidadResenias; }
+    public void setCantidadResenias(Integer cantidadResenias) { this.cantidadResenias = cantidadResenias; }
 }

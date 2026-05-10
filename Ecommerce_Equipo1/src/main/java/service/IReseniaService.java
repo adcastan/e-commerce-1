@@ -1,22 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package service;
 
-import models.Resenia;
+import DTOs.ReseniaDTO;
+import java.util.List;
 
-/**
- *
- * @author Adrián
- */
 public interface IReseniaService {
 
-    public Resenia crearCliente(Resenia resenia);
+    ReseniaDTO crear(Integer idCliente, ReseniaDTO datos);
 
-    Long buscarPorId(int id);
+    List<ReseniaDTO> listar();
 
-    void actualizar(Resenia resenia);
+    List<ReseniaDTO> listarPorLibro(Integer idLibro);
 
-    Long eliminar(int id);
+    List<ReseniaDTO> listarPorCliente(Integer idCliente);
+
+    boolean eliminar(Integer id);
 }

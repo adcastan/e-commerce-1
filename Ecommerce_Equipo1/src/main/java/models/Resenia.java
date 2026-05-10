@@ -1,74 +1,59 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import java.util.Date;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "resenias")
 public class Resenia {
-    
-    public Resenia(){
-        
-    }
-    
+
     @Id
-    int idResenia;
-    @OneToOne
-    Date fechaHora;
-    @OneToOne
-    int calificacion;
-    @OneToMany
-    Cliente idCliente;   
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_resenia")
+    private Integer idResenia;
 
-    public Resenia(int idResenia, Date fechaHora, int calificacion, Cliente idCliente) {
-        this.idResenia = idResenia;
-        this.fechaHora = fechaHora;
+    @Column(name = "fecha_hora", nullable = false)
+    private LocalDateTime fechaHora = LocalDateTime.now();
+
+    @Column(name = "calificacion", nullable = false)
+    private int calificacion;
+
+    @Column(name = "comentario", columnDefinition = "TEXT")
+    private String comentario;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_libro", nullable = false)
+    private Libro libro;
+
+    public Resenia() {
+    }
+
+    public Resenia(int calificacion, String comentario, Cliente cliente, Libro libro) {
         this.calificacion = calificacion;
-        this.idCliente = idCliente;
+        this.comentario = comentario;
+        this.cliente = cliente;
+        this.libro = libro;
     }
 
-    public int getIdResenia() {
-        return idResenia;
-    }
+    public Integer getIdResenia() { return idResenia; }
+    public void setIdResenia(Integer idResenia) { this.idResenia = idResenia; }
 
-    public void setIdResenia(int idResenia) {
-        this.idResenia = idResenia;
-    }
+    public LocalDateTime getFechaHora() { return fechaHora; }
+    public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
 
-    public Date getFechaHora() {
-        return fechaHora;
-    }
+    public int getCalificacion() { return calificacion; }
+    public void setCalificacion(int calificacion) { this.calificacion = calificacion; }
 
-    public void setFechaHora(Date fechaHora) {
-        this.fechaHora = fechaHora;
-    }
+    public String getComentario() { return comentario; }
+    public void setComentario(String comentario) { this.comentario = comentario; }
 
-    public int getCalificacion() {
-        return calificacion;
-    }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public void setCalificacion(int calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public Cliente getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Cliente idCliente) {
-        this.idCliente = idCliente;
-    }
-    
-    
-    
+    public Libro getLibro() { return libro; }
+    public void setLibro(Libro libro) { this.libro = libro; }
 }

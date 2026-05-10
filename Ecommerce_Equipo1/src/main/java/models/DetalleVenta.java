@@ -1,92 +1,65 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "detalles_venta")
 public class DetalleVenta {
 
-    public DetalleVenta() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_detalle_venta")
+    private Integer idDetalleVenta;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_venta", nullable = false)
+    private Venta venta;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_libro", nullable = false)
+    private Libro libro;
+
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
+
+    @Column(name = "precio_unitario", nullable = false)
+    private double precioUnitario;
+
+    @Column(name = "subtotal", nullable = false)
+    private double subTotal;
+
+    public DetalleVenta() {
     }
 
-    @Id
-    int idDetalleVenta;
-    @OneToOne
-    Venta idVenta;
-    @OneToOne
-    Libro idLibro;
-    int cantidad;
-    int precioUnitario;
-    int subTotal;
-
-    public DetalleVenta(int idDetalleVenta, Venta idVenta, Libro idLibro, int cantidad, int precioUnitario, int subTotal) {
-        this.idDetalleVenta = idDetalleVenta;
-        this.idVenta = idVenta;
-        this.idLibro = idLibro;
+    public DetalleVenta(Venta venta, Libro libro, int cantidad, double precioUnitario) {
+        this.venta = venta;
+        this.libro = libro;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
-        this.subTotal = subTotal;
+        this.subTotal = precioUnitario * cantidad;
     }
 
-    public int getIdDetalleVenta() {
-        return idDetalleVenta;
-    }
+    public Integer getIdDetalleVenta() { return idDetalleVenta; }
+    public void setIdDetalleVenta(Integer idDetalleVenta) { this.idDetalleVenta = idDetalleVenta; }
 
-    public void setIdDetalleVenta(int idDetalleVenta) {
-        this.idDetalleVenta = idDetalleVenta;
-    }
+    public Venta getVenta() { return venta; }
+    public void setVenta(Venta venta) { this.venta = venta; }
 
-    public Venta getIdVenta() {
-        return idVenta;
-    }
+    public Libro getLibro() { return libro; }
+    public void setLibro(Libro libro) { this.libro = libro; }
 
-    public void setIdVenta(Venta idVenta) {
-        this.idVenta = idVenta;
-    }
-
-    public Libro getIdLibro() {
-        return idLibro;
-    }
-
-    public void setIdLibro(Libro idLibro) {
-        this.idLibro = idLibro;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
+    public int getCantidad() { return cantidad; }
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+        this.subTotal = this.precioUnitario * cantidad;
     }
 
-    public int getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(int precioUnitario) {
+    public double getPrecioUnitario() { return precioUnitario; }
+    public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
+        this.subTotal = precioUnitario * this.cantidad;
     }
 
-    public int getSubTotal() {
-        return subTotal;
-    }
-
-    public void setSubTotal(int subTotal) {
-        this.subTotal = subTotal;
-    }
-
-    @Override
-    public String toString() {
-        return "DetalleVenta{" + "idDetalleVenta=" + idDetalleVenta + ", idVenta=" + idVenta + ", idLibro=" + idLibro + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + ", subTotal=" + subTotal + '}';
-    }
-
+    public double getSubTotal() { return subTotal; }
+    public void setSubTotal(double subTotal) { this.subTotal = subTotal; }
 }

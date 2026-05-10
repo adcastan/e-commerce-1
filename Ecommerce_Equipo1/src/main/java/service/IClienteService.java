@@ -1,24 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package service;
 
-import models.Cliente;
+import DTOs.ClienteDTO;
+import DTOs.EditarPerfilDTO;
+import DTOs.LoginDTO;
+import DTOs.RegistroClienteDTO;
+import java.util.List;
 
-/**
- *
- * @author Adrián
- */
 public interface IClienteService {
 
-    public Cliente crearCliente(Cliente cliente);
+    ClienteDTO registrar(RegistroClienteDTO datos);
 
-    Long buscarPorId(int id);
+    String autenticar(LoginDTO login);
 
-    void actualizar(Cliente cliente);
+    String autenticarAdmin(LoginDTO login);
 
-    Long eliminar(int id);
-    
-    }
+    ClienteDTO buscarPorId(Integer id);
 
+    List<ClienteDTO> listar();
+
+    ClienteDTO actualizarPerfil(Integer id, EditarPerfilDTO datos);
+
+    ClienteDTO cambiarEstado(Integer id, boolean activo);
+
+    boolean eliminar(Integer id);
+}

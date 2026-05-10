@@ -1,66 +1,60 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTOs;
 
-/**
- *
- * @author Adrián
- */
+import java.time.LocalDateTime;
+
 public class ClienteDTO {
 
+    private Integer idCliente;
+    private String nombre;
+    private String apellido;
+    private String correo;
+    private String telefono;
+    private String direccion;
+    private String rol;
+    private boolean activo;
+    private LocalDateTime fechaRegistro;
+
     public ClienteDTO() {
-
     }
 
-    public ClienteDTO(int idCliente, String nombreCliente, String correoElectronico, String contrasenia) {
+    public ClienteDTO(Integer idCliente, String nombre, String apellido, String correo,
+                      String telefono, String direccion, String rol, boolean activo,
+                      LocalDateTime fechaRegistro) {
         this.idCliente = idCliente;
-        this.nombreCliente = nombreCliente;
-        this.correoElectronico = correoElectronico;
-        this.contrasenia = contrasenia;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.rol = rol;
+        this.activo = activo;
+        this.fechaRegistro = fechaRegistro;
     }
 
-    int idCliente;
-    String nombreCliente;
-    String correoElectronico;
-    String contrasenia;
+    public Integer getIdCliente() { return idCliente; }
+    public void setIdCliente(Integer idCliente) { this.idCliente = idCliente; }
 
-    public int getIdCliente() {
-        return idCliente;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
 
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
+    public String getCorreo() { return correo; }
+    public void setCorreo(String correo) { this.correo = correo; }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
+    public String getRol() { return rol; }
+    public void setRol(String rol) { this.rol = rol; }
 
-    public String getContrasenia() {
-        return contrasenia;
-    }
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
 
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" + "idCliente=" + idCliente + ", nombreCliente=" + nombreCliente + ", correoElectronico=" + correoElectronico + ", contrasenia=" + contrasenia + '}';
-    }
-
+    public LocalDateTime getFechaRegistro() { return fechaRegistro; }
+    public void setFechaRegistro(LocalDateTime fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 }
