@@ -1,25 +1,74 @@
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\models\Genero.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\DTOs\ClienteDTO.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\models\Libro.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\controllers\VentaServlet.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\daos\LibroService.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\DTOs\GeneroDTO.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\DTOs\VentaDTO.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\models\Venta.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\com\ecommerce_equipo1\resources\JakartaEE10Resource.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\daos\ILibroService.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\util\JWTUtil.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\com\ecommerce_equipo1\JakartaRestConfiguration.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\DTOs\LibroDTO.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\models\Cliente.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\daos\IVentaService.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\models\DetalleVenta.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\util\JPAUtil.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\DTOs\MetodoPagoDTO.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\daos\ClienteService.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\daos\VentaService.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\daos\IClienteService.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\controllers\ClienteServlet.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\models\MetodoPago.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\controllers\LibroServlet.java
-C:\Users\Adrián\Documentos\Github\e-commerce-1\Ecommerce_Equipo1\src\main\java\controllers\CarritoServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\VentaDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\ClienteDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\api\PerfilApiServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\GeneroDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\ReseniaService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\api\ResenasApiServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\Rol.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\Venta.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\util\JWTUtil.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\RegistroClienteDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\util\JPAUtil.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\IVentaService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\LibroDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\MetodoPagoService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\util\PagoSimulador.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\api\AuthApiServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\IMetodoPagoDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\ILibroService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\api\MetodosPagoApiServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\AdminLogoutServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\DetalleVenta.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\AdminDashboardServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\ILibroDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\GeneroService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\filters\AdminAutenticacionFiltro.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\AdminPedidosServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\IClienteDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\DatosPagoDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\IMetodoPagoService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\DetalleVentaDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\EstadoVenta.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\Libro.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\util\Mappers.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\api\CarritoApiServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\MetodoPagoDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\api\PedidosApiServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\Genero.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\LoginDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\util\RespuestaJSON.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\filters\JwtAutenticacionFiltro.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\IClienteService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\util\PasswordUtil.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\AdminResenasServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\ItemCarritoDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\IGeneroService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\AdminGenerosServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\ClienteService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\ReseniaDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\Resenia.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\api\ProductosApiServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\IReseniaDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\MetodoPagoDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\CrearVentaDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\EditarPerfilDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\LibroDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\filters\CorsFiltro.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\NegocioException.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\util\JSONMapper.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\IVentaDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\ClienteDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\api\GenerosApiServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\LibroService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\VentaService.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\AdminClientesServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\Cliente.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\AdminLibrosServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\SeedListener.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\controllers\AdminLoginServlet.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\IGeneroDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\models\MetodoPago.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\DTOs\GeneroDTO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\VentaDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\daos\ReseniaDAO.java
+C:\Users\jorge\Desktop\ITSON Jorge 8vo semestre\Aplicaciones web\Proyecto final\repo\Ecommerce_Equipo1\src\main\java\service\IReseniaService.java
