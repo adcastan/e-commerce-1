@@ -1,39 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar perfil - Hojas Sueltas</title>
+    <script>
+        (function(){
+            var p = window.location.pathname.split('/').filter(Boolean);
+            var ctx = (p.length > 1 && !p[0].includes('.')) ? '/' + p[0] + '/' : '/';
+            document.write('<base href="' + ctx + '">');
+        })();
+    </script>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
 
-    <head>
-
-        <meta charset="UTF-8">
-        <title>Editar perfil</title>
-
-        <link rel="stylesheet" href="styles.css">
-
-    </head>
-
-    <body>
-
-        <div class="form-container">
-
-            <h2>Editar información</h2>
-
-            <div class="form-group">
-                <input placeholder="Nombre">
+<main class="contenedor seccion">
+    <h2>Mi cuenta</h2>
+    <div class="barra-perfil">
+        <aside class="menu-perfil">
+            <a href="miPerfil.html">Inicio</a>
+            <a href="editarPerfil.html" class="activo">Editar mi informaci&oacute;n</a>
+            <a href="misPedidos.html">Mis pedidos</a>
+            <a href="#" id="cerrar-sesion" style="color:var(--rojo)">Cerrar sesi&oacute;n</a>
+        </aside>
+        <section class="contenido-perfil">
+            <div class="formulario-pagina" style="margin:0;max-width:none;">
+                <h1 style="text-align:left;">Editar informaci&oacute;n</h1>
+                <p class="ayuda" style="text-align:left;">deja en blanco los campos de contrase&ntilde;a si no quieres cambiarla</p>
+                <div id="alerta"></div>
+                <form id="form-editar">
+                    <div class="fila-grid-2">
+                        <label>Nombre <input type="text" name="nombre" required></label>
+                        <label>Apellido <input type="text" name="apellido" required></label>
+                    </div>
+                    <label>Correo electr&oacute;nico <input type="email" name="correo" required></label>
+                    <label>Tel&eacute;fono <input type="tel" name="telefono" pattern="[0-9]{10}"></label>
+                    <label>Direcci&oacute;n <input type="text" name="direccion"></label>
+                    <hr style="border:none;border-top:1px solid var(--borde);margin:1rem 0;">
+                    <label>Contrase&ntilde;a actual <input type="password" name="contraseniaActual"></label>
+                    <label>Nueva contrase&ntilde;a <input type="password" name="contraseniaNueva" minlength="6"></label>
+                    <button type="submit" class="boton principal">Guardar cambios</button>
+                </form>
             </div>
+        </section>
+    </div>
+</main>
 
-            <div class="form-group">
-                <input placeholder="Apellido">
-            </div>
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
 
-            <div class="form-group">
-                <input placeholder="Correo">
-            </div>
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+if (!Auth.estaAutenticado()) {
+    sessionStorage.setItem('regresoLogin', 'editarPerfil.html');
+    window.location.href = 'iniciarSesion.html';
+}
 
-            <button class="btn">
-                Guardar cambios
-            </button>
+document.getElementById('cerrar-sesion').addEventListener('click', (e) => {
+    e.preventDefault();
+    Auth.cerrarSesion();
+    window.location.href = 'index.html';
+});
 
-        </div>
+const form = document.getElementById('form-editar');
+const alerta = document.getElementById('alerta');
 
-    </body>
+(async function cargar() {
+    try {
+        const c = await llamarApi('GET', '/perfil', null, true);
+        form.nombre.value = c.nombre || '';
+        form.apellido.value = c.apellido || '';
+        form.correo.value = c.correo || '';
+        form.telefono.value = c.telefono || '';
+        form.direccion.value = c.direccion || '';
+    } catch (e) {}
+})();
 
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    alerta.innerHTML = '';
+    const fd = new FormData(form);
+    const datos = {};
+    fd.forEach((v, k) => { if (v) datos[k] = v; });
+    try {
+        const actualizado = await llamarApi('PUT', '/perfil', datos, true);
+        Auth.guardarSesion(Auth.obtenerToken(), actualizado);
+        notificar('cambios guardados');
+        form.contraseniaActual.value = '';
+        form.contraseniaNueva.value = '';
+    } catch (err) {
+        alerta.innerHTML = '<div class="alerta error">' + escaparHtml(err.message) + '</div>';
+    }
+});
+</script>
+</body>
 </html>

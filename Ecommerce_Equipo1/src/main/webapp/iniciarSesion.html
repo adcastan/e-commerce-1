@@ -1,33 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesi&oacute;n - Hojas Sueltas</title>
+    <script>
+        (function(){
+            var p = window.location.pathname.split('/').filter(Boolean);
+            var ctx = (p.length > 1 && !p[0].includes('.')) ? '/' + p[0] + '/' : '/';
+            document.write('<base href="' + ctx + '">');
+        })();
+    </script>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca por t&iacute;tulo, autor o ISBN" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
 
-    <head>
+<main class="contenedor">
+    <div class="formulario-pagina">
+        <h1>Iniciar sesi&oacute;n</h1>
+        <p class="ayuda">accede a tu cuenta para realizar compras</p>
+        <div id="alerta"></div>
+        <form id="form-login">
+            <label>
+                Correo electr&oacute;nico
+                <input type="email" name="correo" required autofocus>
+            </label>
+            <label>
+                Contrase&ntilde;a
+                <input type="password" name="contrasenia" required>
+            </label>
+            <button type="submit" class="boton principal">Entrar</button>
+        </form>
+        <p style="text-align:center;margin-top:1.5rem;">
+            <a href="crearCuenta.html">&iquest;no tienes cuenta? reg&iacute;strate</a>
+        </p>
+    </div>
+</main>
 
-        <meta charset="UTF-8">
-        <title>Iniciar sesión</title>
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
 
-        <link rel="stylesheet" href="styles.css">
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+const form = document.getElementById('form-login');
+const alerta = document.getElementById('alerta');
 
-    </head>
+if (Auth.estaAutenticado()) {
+    window.location.href = 'index.html';
+}
 
-    <body>
-
-        <div class="form-container">
-
-            <h2>Iniciar sesión</h2>
-
-            <div class="form-group">
-                <input placeholder="Correo">
-            </div>
-
-            <div class="form-group">
-                <input type="password" placeholder="Contraseña">
-            </div>
-
-            <button class="btn">Iniciar sesión</button>
-
-        </div>
-
-    </body>
-
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    alerta.innerHTML = '';
+    const fd = new FormData(form);
+    const datos = { correo: fd.get('correo'), contrasenia: fd.get('contrasenia') };
+    try {
+        const respuesta = await llamarApi('POST', '/auth/login', datos);
+        Auth.guardarSesion(respuesta.token, respuesta.cliente);
+        const destino = sessionStorage.getItem('regresoLogin') || 'index.html';
+        sessionStorage.removeItem('regresoLogin');
+        window.location.href = destino;
+    } catch (err) {
+        alerta.innerHTML = '<div class="alerta error">' + escaparHtml(err.message) + '</div>';
+    }
+});
+</script>
+</body>
 </html>

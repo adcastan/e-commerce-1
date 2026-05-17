@@ -1,22 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package service;
 
-import models.Venta;
+import DTOs.CrearVentaDTO;
+import DTOs.VentaDTO;
+import java.util.List;
+import models.EstadoVenta;
 
-/**
- *
- * @author Adrián
- */
 public interface IVentaService {
-         
-    public Venta crearVenta(Venta venta);
-    
-    public void buscarVentaPorId(int id);
-    
-    public void actualizarVenta(Venta venta);
-    
-    public void eliminar(int id);
+
+    VentaDTO crearPedido(CrearVentaDTO datos);
+
+    VentaDTO buscarPorId(Integer id);
+
+    List<VentaDTO> listar();
+
+    List<VentaDTO> listarPorCliente(Integer idCliente);
+
+    VentaDTO actualizarEstado(Integer idVenta, EstadoVenta nuevoEstado);
 }

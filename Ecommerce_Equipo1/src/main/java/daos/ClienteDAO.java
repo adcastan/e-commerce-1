@@ -1,57 +1,101 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package daos;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import models.Cliente;
 import util.JPAUtil;
 
-/**
- *
- * @author Adrián
- */
 public class ClienteDAO implements IClienteDAO {
 
-    EntityManager em = JPAUtil.getInstance().getEntityManager();
-
     @Override
-    public void guardar(Cliente cliente) {
-        em.getTransaction().begin();
-        em.persist(cliente);
-        em.getTransaction().commit();
-
+    public Cliente guardar(Cliente cliente) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(cliente);
+            em.getTransaction().commit();
+            return cliente;
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
-    public void actualizar(Cliente cliente) {
-
-        em.getTransaction().begin();
-        em.merge(cliente);
-        em.getTransaction().commit();
-
+    public Cliente buscarPorId(Integer id) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            return em.find(Cliente.class, id);
+        } finally {
+            em.close();
+        }
     }
 
     @Override
-    public int eliminar(int id) {
-
-        em.getTransaction().begin();
-
-        Cliente cliente = em.find(Cliente.class, id);
-
-        em.remove(cliente);
-
-        em.getTransaction().commit();
-        return id;
-
+    public Cliente buscarPorCorreo(String correo) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            TypedQuery<Cliente> q = em.createQuery(
+                    "SELECT c FROM Cliente c WHERE c.correo = :correo", Cliente.class);
+            q.setParameter("correo", correo);
+            return q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
-    public Cliente buscarPorId(int id) {
-        return em.find(Cliente.class, id);
+    public List<Cliente> listar() {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            return em.createQuery(
+                    "SELECT c FROM Cliente c ORDER BY c.idCliente", Cliente.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 
+    @Override
+    public Cliente actualizar(Cliente cliente) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Cliente actualizado = em.merge(cliente);
+            em.getTransaction().commit();
+            return actualizado;
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 
+    @Override
+    public boolean eliminar(Integer id) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Cliente c = em.find(Cliente.class, id);
+            if (c == null) {
+                em.getTransaction().rollback();
+                return false;
+            }
+            em.remove(c);
+            em.getTransaction().commit();
+            return true;
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }
