@@ -1,25 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package service;
 
-import models.Libro;
+import DTOs.LibroDTO;
+import java.util.List;
 
-/**
- *
- * @author Adrián
- */
 public interface ILibroService {
 
-    public Libro crearLibro(Libro libro);
+    LibroDTO crear(LibroDTO datos);
 
-    Libro buscarPorCorreoYContrasenia(String titulo);
+    LibroDTO buscarPorId(Integer id);
 
-    Libro buscarPorGenero(String genero);
-    
+    LibroDTO buscarPorIdConDetalles(Integer id);
 
-    void actualizar(Libro libro);
+    List<LibroDTO> listar();
 
-    void eliminar(int id);
+    List<LibroDTO> listarDestacados(int limite);
+
+    List<LibroDTO> listarRecientes(int limite);
+
+    List<LibroDTO> filtrar(String texto, Integer idGenero, Double precioMin, Double precioMax);
+
+    LibroDTO actualizar(Integer id, LibroDTO datos);
+
+    boolean eliminar(Integer id);
 }

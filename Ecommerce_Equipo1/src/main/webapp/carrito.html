@@ -1,49 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - Hojas Sueltas</title>
+    <script>
+        (function(){
+            var p = window.location.pathname.split('/').filter(Boolean);
+            var ctx = (p.length > 1 && !p[0].includes('.')) ? '/' + p[0] + '/' : '/';
+            document.write('<base href="' + ctx + '">');
+        })();
+    </script>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca por t&iacute;tulo, autor o ISBN" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
 
-    <head>
+<main class="contenedor seccion">
+    <h2>Tu carrito</h2>
+    <div id="contenido-carrito">
+        <div class="cargando">Cargando...</div>
+    </div>
+</main>
 
-        <meta charset="UTF-8">
-        <title>Carrito</title>
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
 
-        <link rel="stylesheet" href="styles.css">
-
-    </head>
-
-    <body>
-
-        <header>
-            <div class="logo">[Nombre]</div>
-        </header>
-
-        <div class="container">
-
-            <div class="cart-container">
-
-                <h2>Carrito</h2>
-
-                <div class="cart-item">
-
-                    <div class="book-img"></div>
-
-                    <div>
-                        Libro ejemplo
-                        <br>
-                        $200
-                    </div>
-
-                </div>
-
-                <a href="pago.html">
-                    <button class="btn">
-                        Proceder al pago
-                    </button>
-                </a>
-
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+async function pintarCarrito() {
+    const items = Carrito.leer();
+    const cont = document.getElementById('contenido-carrito');
+    if (items.length === 0) {
+        cont.innerHTML = `
+            <div class="carrito-vacio">
+                <p>tu carrito est\u00e1 vac\u00edo</p>
+                <a href="index.html" class="boton principal">explorar libros</a>
             </div>
+        `;
+        return;
+    }
 
+    let datosServidor = null;
+    try {
+        datosServidor = await llamarApi('POST', '/carrito', { items: items.map(i => ({ idLibro: i.idLibro, cantidad: i.cantidad })) });
+    } catch (e) {
+        cont.innerHTML = '<div class="alerta error">no se pudo verificar disponibilidad</div>';
+        return;
+    }
+
+    if (datosServidor.advertencias && datosServidor.advertencias.length > 0) {
+        notificar(datosServidor.advertencias[0], 'aviso');
+    }
+
+    const itemsHtml = datosServidor.items.map(i => `
+        <div class="item-carrito" data-id="${i.idLibro}">
+            <img src="${escaparHtml(i.imagenUrl || '')}" alt="${escaparHtml(i.tituloLibro)}">
+            <div>
+                <div class="titulo-item">${escaparHtml(i.tituloLibro)}</div>
+                <div class="autor-item">${escaparHtml(i.autorLibro)}</div>
+                <div class="precio-item">${formatearMoneda(i.precioUnitario)}</div>
+                <button class="eliminar-item" data-eliminar="${i.idLibro}">eliminar</button>
+            </div>
+            <div class="controles-cantidad">
+                <button data-restar="${i.idLibro}">-</button>
+                <input type="number" min="1" value="${i.cantidad}" data-cantidad="${i.idLibro}">
+                <button data-sumar="${i.idLibro}">+</button>
+            </div>
+            <div class="subtotal-item">${formatearMoneda(i.subTotal)}</div>
         </div>
+    `).join('');
 
-    </body>
+    cont.innerHTML = `
+        <div class="lista-carrito">${itemsHtml}</div>
+        <div class="resumen-carrito">
+            <div><strong>${datosServidor.totalItems}</strong> art\u00edculos</div>
+            <div class="total"><span>Total</span><span>${formatearMoneda(datosServidor.total)}</span></div>
+            <a href="checkout.html" class="boton principal" style="text-align:center">Proceder al pago</a>
+        </div>
+    `;
 
+    cont.querySelectorAll('[data-restar]').forEach(b => b.addEventListener('click', () => {
+        const id = parseInt(b.dataset.restar);
+        const item = Carrito.leer().find(i => i.idLibro === id);
+        if (item) {
+            Carrito.actualizarCantidad(id, item.cantidad - 1);
+            pintarCarrito();
+        }
+    }));
+    cont.querySelectorAll('[data-sumar]').forEach(b => b.addEventListener('click', () => {
+        const id = parseInt(b.dataset.sumar);
+        const item = Carrito.leer().find(i => i.idLibro === id);
+        if (item) {
+            Carrito.actualizarCantidad(id, item.cantidad + 1);
+            pintarCarrito();
+        }
+    }));
+    cont.querySelectorAll('[data-cantidad]').forEach(inp => inp.addEventListener('change', () => {
+        const id = parseInt(inp.dataset.cantidad);
+        const valor = parseInt(inp.value);
+        if (valor > 0) {
+            Carrito.actualizarCantidad(id, valor);
+            pintarCarrito();
+        }
+    }));
+    cont.querySelectorAll('[data-eliminar]').forEach(b => b.addEventListener('click', () => {
+        Carrito.eliminar(parseInt(b.dataset.eliminar));
+        pintarCarrito();
+    }));
+}
+
+pintarCarrito();
+</script>
+</body>
 </html>

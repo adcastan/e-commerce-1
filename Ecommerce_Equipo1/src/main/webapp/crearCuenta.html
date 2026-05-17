@@ -1,45 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta - Hojas Sueltas</title>
+    <script>
+        (function(){
+            var p = window.location.pathname.split('/').filter(Boolean);
+            var ctx = (p.length > 1 && !p[0].includes('.')) ? '/' + p[0] + '/' : '/';
+            document.write('<base href="' + ctx + '">');
+        })();
+    </script>
+    <link rel="stylesheet" href="static/css/cliente.css">
+</head>
+<body>
+<header class="encabezado-principal">
+    <div class="contenedor">
+        <a href="index.html" class="marca">
+            <span class="nombre">Hojas Sueltas</span>
+            <span class="lema">cada libro, una historia</span>
+        </a>
+        <form class="buscador form-buscador">
+            <input type="search" name="q" placeholder="busca por t&iacute;tulo, autor o ISBN" aria-label="buscar">
+        </form>
+        <nav class="acciones-encabezado"></nav>
+    </div>
+</header>
 
-    <head>
-
-        <meta charset="UTF-8">
-        <title>Crear cuenta</title>
-
-        <link rel="stylesheet" href="styles.css">
-
-    </head>
-
-    <body>
-
-        <div class="form-container">
-
-            <h2>Crear cuenta</h2>
-
-            <div class="form-group">
-                <input placeholder="Nombre">
+<main class="contenedor">
+    <div class="formulario-pagina">
+        <h1>Crear cuenta</h1>
+        <p class="ayuda">&uacute;nete a Hojas Sueltas y empieza a comprar</p>
+        <div id="alerta"></div>
+        <form id="form-registro">
+            <div class="fila-grid-2">
+                <label>
+                    Nombre
+                    <input type="text" name="nombre" required>
+                </label>
+                <label>
+                    Apellido
+                    <input type="text" name="apellido" required>
+                </label>
             </div>
-
-            <div class="form-group">
-                <input placeholder="Apellido">
+            <label>
+                Tel&eacute;fono
+                <input type="tel" name="telefono" pattern="[0-9]{10}" placeholder="10 d\u00edgitos">
+            </label>
+            <label>
+                Direcci&oacute;n
+                <input type="text" name="direccion" placeholder="calle, n\u00famero, colonia, ciudad">
+            </label>
+            <label>
+                Correo electr&oacute;nico
+                <input type="email" name="correo" required>
+            </label>
+            <div class="fila-grid-2">
+                <label>
+                    Contrase&ntilde;a
+                    <input type="password" name="contrasenia" minlength="6" required>
+                </label>
+                <label>
+                    Confirmar contrase&ntilde;a
+                    <input type="password" name="confirmar" minlength="6" required>
+                </label>
             </div>
+            <button type="submit" class="boton principal">Crear cuenta</button>
+        </form>
+        <p style="text-align:center;margin-top:1.5rem;">
+            <a href="iniciarSesion.html">&iquest;ya tienes cuenta? inicia sesi&oacute;n</a>
+        </p>
+    </div>
+</main>
 
-            <div class="form-group">
-                <input placeholder="Correo">
-            </div>
+<footer class="pie">
+    <div class="contenedor">
+        <p>Hojas Sueltas &middot; Librer&iacute;a en l&iacute;nea</p>
+    </div>
+</footer>
 
-            <div class="form-group">
-                <input type="password" placeholder="Contraseña">
-            </div>
+<script src="static/js/api.js"></script>
+<script src="static/js/carrito.js"></script>
+<script src="static/js/layout.js"></script>
+<script>
+const form = document.getElementById('form-registro');
+const alerta = document.getElementById('alerta');
 
-            <div class="form-group">
-                <input type="password" placeholder="Confirmar contraseña">
-            </div>
-
-            <button class="btn">Crear cuenta</button>
-
-        </div>
-
-    </body>
-
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    alerta.innerHTML = '';
+    const fd = new FormData(form);
+    if (fd.get('contrasenia') !== fd.get('confirmar')) {
+        alerta.innerHTML = '<div class="alerta error">las contrase\u00f1as no coinciden</div>';
+        return;
+    }
+    const datos = {
+        nombre: fd.get('nombre'),
+        apellido: fd.get('apellido'),
+        correo: fd.get('correo'),
+        contrasenia: fd.get('contrasenia'),
+        telefono: fd.get('telefono'),
+        direccion: fd.get('direccion')
+    };
+    try {
+        await llamarApi('POST', '/auth/registro', datos);
+        const login = await llamarApi('POST', '/auth/login', { correo: datos.correo, contrasenia: datos.contrasenia });
+        Auth.guardarSesion(login.token, login.cliente);
+        notificar('cuenta creada exitosamente');
+        setTimeout(() => window.location.href = 'index.html', 800);
+    } catch (err) {
+        alerta.innerHTML = '<div class="alerta error">' + escaparHtml(err.message) + '</div>';
+    }
+});
+</script>
+</body>
 </html>

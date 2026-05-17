@@ -1,75 +1,73 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "ventas")
 public class Venta {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_venta")
+    private Integer idVenta;
+
+    @Column(name = "numero_pedido", nullable = false, length = 30, unique = true)
+    private String numeroPedido;
+
+    @Column(name = "fecha_hora", nullable = false)
+    private LocalDateTime fechaHora = LocalDateTime.now();
+
+    @Column(name = "total", nullable = false)
+    private double total;
+
+    @Column(name = "direccion_envio", nullable = false, length = 250)
+    private String direccionEnvio;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false, length = 20)
+    private EstadoVenta estado = EstadoVenta.PENDIENTE;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_pago", nullable = false)
+    private MetodoPago metodoPago;
+
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<DetalleVenta> detalles = new ArrayList<>();
 
     public Venta() {
     }
-    
-    @Id
-    int idVenta;
-    Date fechaHora;
-    int total;
-    @OneToOne
-    Cliente idCliente;
-    @OneToOne
-    MetodoPago idPago;
 
-    public int getIdVenta() {
-        return idVenta;
-    }
+    public Integer getIdVenta() { return idVenta; }
+    public void setIdVenta(Integer idVenta) { this.idVenta = idVenta; }
 
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
-    }
+    public String getNumeroPedido() { return numeroPedido; }
+    public void setNumeroPedido(String numeroPedido) { this.numeroPedido = numeroPedido; }
 
-    public Date getFechaHora() {
-        return fechaHora;
-    }
+    public LocalDateTime getFechaHora() { return fechaHora; }
+    public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
 
-    public void setFechaHora(Date fechaHora) {
-        this.fechaHora = fechaHora;
-    }
+    public double getTotal() { return total; }
+    public void setTotal(double total) { this.total = total; }
 
-    public int getTotal() {
-        return total;
-    }
+    public String getDireccionEnvio() { return direccionEnvio; }
+    public void setDireccionEnvio(String direccionEnvio) { this.direccionEnvio = direccionEnvio; }
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
+    public EstadoVenta getEstado() { return estado; }
+    public void setEstado(EstadoVenta estado) { this.estado = estado; }
 
-    public Cliente getIdCliente() {
-        return idCliente;
-    }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public void setIdCliente(Cliente idCliente) {
-        this.idCliente = idCliente;
-    }
+    public MetodoPago getMetodoPago() { return metodoPago; }
+    public void setMetodoPago(MetodoPago metodoPago) { this.metodoPago = metodoPago; }
 
-    public MetodoPago getIdPago() {
-        return idPago;
-    }
-
-    public void setIdPago(MetodoPago idPago) {
-        this.idPago = idPago;
-    }
-
-    @Override
-    public String toString() {
-        return "Venta{" + "idVenta=" + idVenta + ", fechaHora=" + fechaHora + ", total=" + total + ", idCliente=" + idCliente + ", idPago=" + idPago + '}';
-    }
-    
-    
+    public List<DetalleVenta> getDetalles() { return detalles; }
+    public void setDetalles(List<DetalleVenta> detalles) { this.detalles = detalles; }
 }

@@ -1,111 +1,116 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "libros")
 public class Libro {
 
-    public Libro() {
-
-    }
     @Id
-    int idLibro;
-    String ISBN;
-    String titulo;
-    String autor;
-    int precio;
-    int stock;
-    Date anioPublicacion;
-    @ManyToMany
-    Genero idGenero;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_libro")
+    private Integer idLibro;
 
-    public Libro(int idLibro, String ISBN, String titulo, String autor, int precio, int stock, Date anioPublicacion, Genero idGenero) {
-        this.idLibro = idLibro;
-        this.ISBN = ISBN;
+    @Column(name = "isbn", nullable = false, length = 20, unique = true)
+    private String isbn;
+
+    @Column(name = "titulo", nullable = false, length = 200)
+    private String titulo;
+
+    @Column(name = "autor", nullable = false, length = 150)
+    private String autor;
+
+    @Column(name = "descripcion", columnDefinition = "TEXT")
+    private String descripcion;
+
+    @Column(name = "precio", nullable = false)
+    private double precio;
+
+    @Column(name = "stock", nullable = false)
+    private int stock;
+
+    @Column(name = "anio_publicacion")
+    private Integer anioPublicacion;
+
+    @Column(name = "editorial", length = 120)
+    private String editorial;
+
+    @Column(name = "imagen_url", length = 300)
+    private String imagenUrl;
+
+    @Column(name = "destacado", nullable = false)
+    private boolean destacado = false;
+
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_genero")
+    private Genero genero;
+
+    @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Resenia> resenias = new ArrayList<>();
+
+    public Libro() {
+    }
+
+    public Libro(String isbn, String titulo, String autor, String descripcion, double precio,
+                 int stock, Integer anioPublicacion, String editorial, String imagenUrl,
+                 boolean destacado, Genero genero) {
+        this.isbn = isbn;
         this.titulo = titulo;
         this.autor = autor;
+        this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
         this.anioPublicacion = anioPublicacion;
-        this.idGenero = idGenero;
+        this.editorial = editorial;
+        this.imagenUrl = imagenUrl;
+        this.destacado = destacado;
+        this.genero = genero;
     }
 
-    public int getIdLibro() {
-        return idLibro;
-    }
+    public Integer getIdLibro() { return idLibro; }
+    public void setIdLibro(Integer idLibro) { this.idLibro = idLibro; }
 
-    public void setIdLibro(int idLibro) {
-        this.idLibro = idLibro;
-    }
+    public String getIsbn() { return isbn; }
+    public void setIsbn(String isbn) { this.isbn = isbn; }
 
-    public String getISBN() {
-        return ISBN;
-    }
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
+    public String getAutor() { return autor; }
+    public void setAutor(String autor) { this.autor = autor; }
 
-    public String getTitulo() {
-        return titulo;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
+    public double getPrecio() { return precio; }
+    public void setPrecio(double precio) { this.precio = precio; }
 
-    public String getAutor() {
-        return autor;
-    }
+    public int getStock() { return stock; }
+    public void setStock(int stock) { this.stock = stock; }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
+    public Integer getAnioPublicacion() { return anioPublicacion; }
+    public void setAnioPublicacion(Integer anioPublicacion) { this.anioPublicacion = anioPublicacion; }
 
-    public int getPrecio() {
-        return precio;
-    }
+    public String getEditorial() { return editorial; }
+    public void setEditorial(String editorial) { this.editorial = editorial; }
 
-    public void setPrecio(int precio) {
-        this.precio = precio;
-    }
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
 
-    public int getStock() {
-        return stock;
-    }
+    public boolean isDestacado() { return destacado; }
+    public void setDestacado(boolean destacado) { this.destacado = destacado; }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
 
-    public Date getAnioPublicacion() {
-        return anioPublicacion;
-    }
+    public Genero getGenero() { return genero; }
+    public void setGenero(Genero genero) { this.genero = genero; }
 
-    public void setAnioPublicacion(Date anioPublicacion) {
-        this.anioPublicacion = anioPublicacion;
-    }
-
-    public Genero getIdGenero() {
-        return idGenero;
-    }
-
-    public void setIdGenero(Genero idGenero) {
-        this.idGenero = idGenero;
-    }
-
-    @Override
-    public String toString() {
-        return "Libro{" + "idLibro=" + idLibro + ", ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", precio=" + precio + ", stock=" + stock + ", anioPublicacion=" + anioPublicacion + ", idGenero=" + idGenero + '}';
-    }
-
+    public List<Resenia> getResenias() { return resenias; }
+    public void setResenias(List<Resenia> resenias) { this.resenias = resenias; }
 }

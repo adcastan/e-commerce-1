@@ -1,51 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import jakarta.persistence.*;
 
-/**
- *
- * @author Adrián
- */
 @Entity
+@Table(name = "generos")
 public class Genero {
-    
-    public Genero(){
-        
-    }
+
     @Id
-    int idGenero;
-    String nombreGenero;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_genero")
+    private Integer idGenero;
 
-    public Genero(int idGenero, String nombreGenero) {
-        this.idGenero = idGenero;
-        this.nombreGenero = nombreGenero;
+    @Column(name = "nombre", nullable = false, length = 60, unique = true)
+    private String nombre;
+
+    public Genero() {
     }
 
-    public int getIdGenero() {
-        return idGenero;
+    public Genero(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setIdGenero(int idGenero) {
-        this.idGenero = idGenero;
-    }
+    public Integer getIdGenero() { return idGenero; }
+    public void setIdGenero(Integer idGenero) { this.idGenero = idGenero; }
 
-    public String getNombreGenero() {
-        return nombreGenero;
-    }
-
-    public void setNombreGenero(String nombreGenero) {
-        this.nombreGenero = nombreGenero;
-    }
-
-    @Override
-    public String toString() {
-        return "Genero{" + "idGenero=" + idGenero + ", nombreGenero=" + nombreGenero + '}';
-    }
-    
-    
-    
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 }

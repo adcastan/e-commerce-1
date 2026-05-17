@@ -1,39 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTOs;
 
-/**
- *
- * @author Adrián
- */
 public class GeneroDTO {
-        public GeneroDTO(){
-        
-    }
-    int idGenero;
-    String nombreGenero;
 
-    public GeneroDTO(int idGenero, String nombreGenero) {
+    private Integer idGenero;
+    private String nombre;
+
+    public GeneroDTO() {
+    }
+
+    public GeneroDTO(Integer idGenero, String nombre) {
         this.idGenero = idGenero;
-        this.nombreGenero = nombreGenero;
+        this.nombre = nombre;
     }
 
-    public int getIdGenero() {
-        return idGenero;
-    }
+    public Integer getIdGenero() { return idGenero; }
+    public void setIdGenero(Integer idGenero) { this.idGenero = idGenero; }
 
-    public void setIdGenero(int idGenero) {
-        this.idGenero = idGenero;
-    }
-
-    public String getNombreGenero() {
-        return nombreGenero;
-    }
-
-    public void setNombreGenero(String nombreGenero) {
-        this.nombreGenero = nombreGenero;
-    }
-
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 }
